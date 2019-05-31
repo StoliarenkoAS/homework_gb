@@ -3,20 +3,23 @@ package gb.stoliarenkoas.ru.material03;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     transaction1.replace(R.id.main_frame, new Fragment1()).commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-                    transaction2.replace(R.id.main_frame, new Fragment2()).commit();
+                    initFragmentTwo();
                     return true;
                 case R.id.navigation_notifications:
                     FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
@@ -96,5 +98,25 @@ public class MainActivity extends AppCompatActivity {
             buttonThree.animate().translationYBy(open ? 600 : -600).alpha(open ? 0f :1f).setDuration(500).setListener(animationListener).start();
         }
     };
+
+
+    private void initFragmentTwo() {
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        transaction2.replace(R.id.main_frame, new Fragment2()).commitNow();
+        List<Message> messages = initList();
+
+        RecyclerView recyclerView = findViewById(R.id.chat_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new Adapter(messages));
+    }
+
+    private List<Message> initList() {
+        final List<Message> messageList = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            messageList.add(new Message("NAME#" + i, "Message text N" + i, Message.Type.FRIEND));
+            messageList.add(new Message("YOU", "Your text N" + i, Message.Type.SELF));
+        }
+        return messageList;
+    }
 
 }
