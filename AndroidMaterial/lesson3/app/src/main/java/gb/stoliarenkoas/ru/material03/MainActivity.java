@@ -3,6 +3,7 @@ package gb.stoliarenkoas.ru.material03;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import gb.stoliarenkoas.ru.material03.touch.ItemTouchCallback;
+import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonOne;
     private Button buttonTwo;
     private Button buttonThree;
+
+    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener fabOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            adapter.onItemDelete(0);
             final boolean open = buttonOne.getVisibility() == View.VISIBLE;
             Animator.AnimatorListener animationListener = new AnimatorListenerAdapter() {
                 @Override
@@ -107,7 +117,19 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.chat_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new Adapter(messages));
+
+        adapter = new Adapter(messages);
+        recyclerView.setAdapter(adapter);
+
+        SnapHelper startSnapHelper = new GravitySnapHelper(Gravity.TOP);
+        startSnapHelper.attachToRecyclerView(recyclerView);
+
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchCallback(adapter));
+        touchHelper.attachToRecyclerView(recyclerView);
+
+        FlipInTopXAnimator animator = new FlipInTopXAnimator();
+        animator.setRemoveDuration(500);
+        recyclerView.setItemAnimator(animator);
     }
 
     private List<Message> initList() {

@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/chat_self_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="NAME"
+        android:fontFamily="@font/wichita"
         android:textStyle="bold"
         android:gravity="end"
         android:layout_marginEnd="16dp"

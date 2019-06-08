@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/chat_friend_name"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         tools:text="NAME"
         android:textStyle="bold"
+        android:fontFamily="@font/wichita"
         android:gravity="start|center_vertical"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
