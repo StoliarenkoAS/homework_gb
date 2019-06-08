@@ -5,11 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     tools:context=".Fragment1">
 
-        <TextView
+        <ImageView
+            android:id="@+id/fragment_one_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/vector_animation"
+            android:tint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/fragment_one_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/fragment_one_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
